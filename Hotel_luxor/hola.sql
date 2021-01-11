@@ -1,0 +1,5 @@
+SELECT  clientes.nombre as nombre_cliente, clientes.apellido as cliente_apellido,clientes.correo,facturas.fecha, facturas.idFactura, clientes.rfc, reservaciones.idReservacion,
+habitaciones.numero, habitaciones.tipo,  habitaciones.precio, DATEDIFF(reservaciones.fecha_salida,reservaciones.fecha_entrada) as n_dias, (habitaciones.precio * (DATEDIFF(reservaciones.fecha_salida,reservaciones.fecha_entrada))) as total_reservacion,
+(habitaciones.precio * (DATEDIFF(reservaciones.fecha_salida,reservaciones.fecha_entrada))+paquetes.precio) as total_factura , sum(servicios.precio * reservacion_servicios.cantidad) as total_servicios
+from facturas inner join clientes on facturas.idCliente=clientes.idCliente inner join reservaciones on  reservaciones.idReservacion= facturas.idReservacion inner join paquetes on reservaciones.paquete = paquetes.idPaquete inner join habitaciones on habitaciones.idHabitacion= reservaciones.habitacion inner join reservacion_servicios on reservaciones.idReservacion = reservacion_servicios.reservacion 
+inner join servicios on reservacion_servicios.idServicio = servicios.idServicio
